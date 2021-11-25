@@ -1,0 +1,65 @@
+#include <cstdio>
+#include <vector>
+
+using namespace std;
+vector<int> a[20001];
+int check[20001];
+
+void dfs(int node, int n)
+{
+    check[node]=n;
+    for(int i=0; i<a[node].size(); i++)
+    {
+        int next = a[node][i];
+        if(check[next]==0)
+            dfs(next, 3-n);
+    }
+}
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+    for(int i=0; i<n; i++)
+    {
+        int v, e;
+        int cnt=0;
+
+        scanf("%d %d", &v, &e);
+
+        for(int j=0; j<e; j++)
+        {
+            int x, y;
+            scanf("%d %d", &x, &y);
+            a[x].push_back(y);
+            a[y].push_back(x);
+        }
+
+        for(int j=1; j<=v; j++)
+        {
+            if(check[j]==false)
+                dfs(j, 1);
+        }
+
+        for(int j=1; j<=v; j++)
+        {
+            for(int k=0; k<a[j].size(); k++)
+            {
+                if(check[a[j][k]]==check[j])
+                {
+                    if(cnt==0)
+                        printf("NO\n");
+                    cnt=1;
+                }
+            }
+        }
+        if(cnt==0)
+            printf("YES\n");
+
+        for(int j=1; j<=v; j++)
+        {
+            check[j]=0;
+            a[j].clear();
+        }
+    }
+}
