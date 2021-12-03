@@ -1,0 +1,59 @@
+#include <stdio.h>
+
+char tr[30][2];
+int N;
+
+void Input()
+{
+    scanf("%d", &N);
+    for(int i=0; i<N; i++)
+    {
+        char p, l, r;
+        getchar();
+        scanf("%c %c %c", &p, &l, &r);
+        tr[p-65][0]=l;
+        tr[p-65][1]=r;
+    }
+}
+
+void Output()
+{
+    for(int i=0; i<N; i++)
+    {
+        printf("%c %c %c\n", i+65, tr[i][0], tr[i][1]);
+    }
+}
+
+void preorder(char c)
+{
+    if(c=='.') return;
+    printf("%c", c);
+    preorder(tr[c-65][0]);
+    preorder(tr[c-65][1]);
+}
+
+void inorder(char c)
+{
+    if(c=='.') return;
+    inorder(tr[c-65][0]);
+    printf("%c", c);
+    inorder(tr[c-65][1]);
+}
+
+void pastorder(char c)
+{
+    if(c=='.') return;
+    pastorder(tr[c-65][0]);
+    pastorder(tr[c-65][1]);
+    printf("%c", c);
+}
+
+int main()
+{
+    Input();
+    preorder('A');
+    printf("\n");
+    inorder('A');
+    printf("\n");
+    pastorder('A');
+}
