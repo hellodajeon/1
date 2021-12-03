@@ -1,0 +1,42 @@
+#include <cstdio>
+#include<string.h>
+
+int ar[1001];
+bool visited[1001];
+int cnt;
+
+void dfs(int now)
+{
+    visited[now]=true;
+    int next=ar[now];
+    if(visited[next])
+        return;
+    dfs(next);
+}
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+    for(;n!=0;n--)
+    {
+        memset(ar, 0, 1001 * sizeof(int));
+        memset(visited, false, 1001 * sizeof(bool));
+        cnt=0;
+        int m;
+        scanf("%d", &m);
+        for(int i=1; i<=m; i++)
+        {
+            scanf("%d", &ar[i]);
+        }
+        for(int i=1; i<=m; i++)
+        {
+            if(!visited[i])
+            {
+                dfs(i);
+                cnt++;
+            }
+        }
+        printf("%d\n", cnt);
+    }
+}
